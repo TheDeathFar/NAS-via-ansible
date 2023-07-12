@@ -1,0 +1,34 @@
+---
+# tasks file for nas
+- name: install nfs-kernel-server via apt
+  package:
+    name: "nfs-kernel-server"
+    state: "present"
+    update_cache: true
+  tags: install_nfs_server
+
+- name: config /etc/exports
+  lineinfile: 
+    dest: /etc/exports
+    line: '/data/nfs       *(rw,no_root_squash,no_subtree_check)'
+  tags: config_exports
+
+- name: create nfs directory
+  file:
+    name: /data/nfs
+    state: directory
+  tags: nfs_directory 
+
+- name: execute exportfs command
+  shell: exportfs -a
+  notify: restart nfs-server
+  tags: 
+    - exportfs_command
+    - notest
+
+- name: ensure nfs-server is enabled and started
+  service:
+    name: nfs-server
+    state: started
+    enabled: true
+  tags: ensure_nfs-server_started   

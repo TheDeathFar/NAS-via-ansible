@@ -1,0 +1,7 @@
+---
+# handlers file for nas
+- name: restart nfs-server
+  service:
+    name: nfs-server
+    state: restarted
+    

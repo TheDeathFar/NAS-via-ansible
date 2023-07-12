@@ -1,0 +1,7 @@
+---
+- hosts: ubuntu_remote
+  gather_facts: true
+  become: true
+
+  roles:
+    - role: nas

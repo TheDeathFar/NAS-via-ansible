@@ -1,0 +1,6 @@
+---
+all:
+  children:
+    ubuntu_remote:
+      hosts:
+        remote
